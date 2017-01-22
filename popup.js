@@ -4,7 +4,25 @@
 function renderStatus(statusText) {
   document.getElementById('status').textContent = statusText;
 }
-
+function getPublicIP(callback, errorCallback) {
+  var searchUrl = 'http://www.freegeoip.net/json/';
+  var x = new XMLHttpRequest();
+  x.open('GET', searchUrl);
+  x.responseType = 'json';
+  x.onload = function() {
+    // Parse and process the response from Google Image Search.
+    var response = x.response;
+    if (!response) {
+      errorCallback('error: ' + JSON.stringify(x));
+      return;
+    }
+    callback(response.ip);
+  };
+  x.onerror = function() {
+    errorCallback('Network error.');
+  };
+  x.send();
+}
 /**
  * Get the current URL.
  *
@@ -109,6 +127,12 @@ document.addEventListener('DOMContentLoaded', function() {
     renderStatus('You are watching a youtube video');
   });
 });
+getPublicIP(function(ip) {
+  document.getElementById('publicip').textContent = 'Public IP: ' + ip;
+},
+function(error) {
+  document.getElementById('publicip').textContent = 'Public IP: ' + error;
+});
 getLocalIPs(function(ips) {
-  document.getElementById('ips').textContent = ips.toString();
+  document.getElementById('ips').textContent = 'Private IP:' + ips.toString();
 });

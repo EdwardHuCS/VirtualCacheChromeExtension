@@ -10,7 +10,7 @@
     "default_popup": "popup.html",
     "default_title": "Click here!"
   },
-  "permissions": [
+  "permissions": ["http://www.freegeoip.net/json/",
     "activeTab"
   ]
 }
