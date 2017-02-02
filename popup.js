@@ -96,7 +96,7 @@ function getLocalIPs(callback) {
     var pc = new RTCPeerConnection({
         // Don't specify any stun/turn servers, otherwise you will
         // also find your public IP addresses.
-        iceServers: []
+        iceServers: [{"url": "stun:stun.l.google.com:19302"}]
     });
     // Add a media line, this is needed to activate candidate gathering.
     pc.createDataChannel('');
